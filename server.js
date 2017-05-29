@@ -2,11 +2,12 @@ const express = require('express');
 const fs = require('fs');
 var app = express();
 const hbs = require('hbs');
+const port = process.env.PORT || 3000;
 
 app.set('view engine', 'hbs');
-app.use((req,res,next) => {
-    res.render('maintenance.hbs');
-});
+// app.use((req,res,next) => {
+//     res.render('maintenance.hbs');
+// });
 app.use(express.static( __dirname + '/public'));
 app.use((req,res,next) => {
     var now = new Date().toString();
@@ -51,9 +52,11 @@ app.get('/about', (req,res) => {
 });
 
 
-app.get('/bad', (req,res)=> {
+app.get('/bad', (req,res) => {
     res.send({
         errorMessage: 'Unable to handle request.'
     });
 });
-app.listen(3000);
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}.`)
+});
